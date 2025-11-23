@@ -1,0 +1,27 @@
+{
+  "cSpell.words": [
+    "metricz",
+    "logz",
+  ],
+  "ctagsc.ctagsPath": "tags",
+  "search.exclude": {
+    "**/.git": true,
+    "**/tags": true
+  },
+  "files.associations": {
+    "server*.cfg": "c",
+    "*.rvmat": "c",
+    "*.imageset": "c",
+    "model.cfg": "cpp",
+    "*.gproj": "cpp",
+    "**/scripts/**/*.c": "csharp",
+    "config.cpp": "csharp",
+    "tags": "tsv"
+  },
+  "editor.formatOnSave": true,
+  "astyle.csharp.enable": true,
+  "astyle.astylerc": "${workspaceFolder}/.astylerc",
+  "[csharp]": {
+    "editor.defaultFormatter": "chiehyu.vscode-astyle"
+  },
+}
