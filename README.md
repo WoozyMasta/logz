@@ -19,6 +19,9 @@ statistics and analytics. The main goals are not to spam with noisy events
 but to provide server administrators with the most important and useful data
 to study player activity and behavior.
 
+<!-- markdownlint-disable-next-line MD033 -->
+<br clear="right"/>
+
 > [!TIP]  
 > It works best when combined with Prometheus-format metrics using the
 > [MetricZ] mod. MetricZ accumulates updatable metrics in counters, while
@@ -233,6 +236,6 @@ At the very least, a Like and Subscribe on the [LogZ] Steam Workshop
 page would be greatly appreciated!
 
 <!-- Links --->
-[LogZ]: https://steamcommunity.com/sharedfiles/filedetails/?id=0
+[LogZ]: https://steamcommunity.com/sharedfiles/filedetails/?id=3610709966
 [MetricZ]: https://steamcommunity.com/sharedfiles/filedetails/?id=3594119002
 [DayZ-Expansion-AI]: https://steamcommunity.com/sharedfiles/filedetails/?id=2792982069

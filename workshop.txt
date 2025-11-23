@@ -17,8 +17,8 @@ It focuses on server analytics and player behavior statistics rather than just e
 
 [h2]Who it’s for[/h2]
 [list]
-[]Server owners who want to visualize player activity and combat in Grafana or Kibana
-[]Admins needing detailed, searchable evidence for investigations (cheaters, abuse)
+[*]Server owners who want to visualize player activity and combat in Grafana or Kibana
+[*]Admins needing detailed, searchable evidence for investigations (cheaters, abuse)
 [*]DevOps enthusiasts building a professional monitoring stack
 [/list]
 
@@ -26,20 +26,20 @@ It focuses on server analytics and player behavior statistics rather than just e
 
 [h2]Key points[/h2]
 [list]
-[][b]Server-only[/b] - players don’t need the mod
-[][b]Structured Data[/b] - every line is a valid JSON object
-[][b]Rich Context[/b] - logs include positions, distance, specific body part hit, ammo type, and hierarchy
-[][b]Performance[/b] - optimized serialization, damage thresholds, and event throttling (e.g., rapid fire)
-[][b]Log Rotation[/b] - built-in file rotation to prevent disk overflow
-[][b]Integrations[/b] - native support for [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3594119002]MetricZ[/url] and DayZ-Expansion-AI
+[*][b]Server-only[/b] - players don’t need the mod
+[*][b]Structured Data[/b] - every line is a valid JSON object
+[*][b]Rich Context[/b] - logs include positions, distance, specific body part hit, ammo type, and hierarchy
+[*][b]Performance[/b] - optimized serialization, damage thresholds, and event throttling (e.g., rapid fire)
+[*][b]Log Rotation[/b] - built-in file rotation to prevent disk overflow
+[*][b]Integrations[/b] - native support for [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3594119002]MetricZ[/url] and DayZ-Expansion-AI
 [/list]
 
 [hr][/hr]
 
 [h2]Quick install[/h2]
 [olist]
-[]Add the mod to your DayZ server load order: [code]-servermod=@LogZ[/code]
-[]Start the server - log file appears at: [code].../profiles/logz.ndjson[/code]
+[*]Add the mod to your DayZ server load order: [code]-servermod=@LogZ[/code]
+[*]Start the server - log file appears at: [code].../profiles/logz.ndjson[/code]
 [*]Configure your log collector (Promtail, Filebeat, Vector) to tail this file
 [/olist]
 
@@ -49,10 +49,10 @@ It focuses on server analytics and player behavior statistics rather than just e
 When setting up [b]Promtail[/b], [b]Fluent Bit[/b], or [b]Vector[/b], ensure you parse the JSON line.
 We recommend using the following root fields as [b]Labels (Tags)[/b] for efficient filtering:
 [list]
-[] instance (Server ID)
-[] world (Map Name)
-[] level (Severity)
-[] event_type (e.g. "player.kill", "chat")
+[*] instance (Server ID)
+[*] world (Map Name)
+[*] level (Severity)
+[*] event_type (e.g. "player.kill", "chat")
 [/list]
 
 [b]Important:[/b] Use the ts field (Unix epoch seconds) as the timestamp source to keep logs accurate even if the collector lags.
@@ -61,10 +61,3 @@ We recommend using the following root fields as [b]Labels (Tags)[/b] for efficie
 
 [h2]Source & docs[/h2]
 GitHub: [url=https://github.com/WoozyMasta/logz]WoozyMasta/logz[/url]
-
-[hr][/hr]
-
-[h2]Support Me[/h2]
-[url=https://gist.github.com/WoozyMasta/7b0cabb538236b7307002c1fbc2d94ea]👉 Support Me[/url]
-
-If this mod saved you hours of analytics or helped catch a cheater or abuser, please consider supporting me. At the very least, a [b]Like[/b] and [b]Subscribe[/b] would be greatly appreciated!
