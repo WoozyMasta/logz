@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -eu
 
+url() {
+  printf '[InternetShortcut]\nURL=%s\n' "$1" >"/p/\@logz/$2.url"
+}
+
 cd /p/logz
 
 ./tools/validate.sh "$PWD"
