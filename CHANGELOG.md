@@ -15,6 +15,16 @@ and this project adheres to [Semantic Versioning][].
 
 ## Unreleased
 
+### Added
+
+* buffered file writing system; logs are now accumulated in memory and
+  flushed to disk based on size or time interval to reduce disk I/O overhead
+* `buffer_size` and `flush_interval` options to control the buffering behavior
+* metric **`dayz_metricz_logz_disk_flushes_total_total`** (`COUNTER`) —
+  Total number of buffer flushes to disk
+* metric **`dayz_metricz_logz_disk_written_bytes_total_total`** (`COUNTER`) —
+  Total size of logs written to disk in bytes
+
 ### Changed
 
 * migrate configuration to `$profile:logz/config.json` file

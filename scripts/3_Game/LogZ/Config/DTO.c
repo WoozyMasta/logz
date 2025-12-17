@@ -122,6 +122,15 @@ class LogZ_ConfigDTO_File
 	// > 1    - Keeps N rotated files (e.g., .0.ndjson, .1.ndjson).
 	int rotation_keep = 5;
 
+	// Buffer size (in lines) for file writing.
+	// 0 - Disable buffer, write each line immediately (Direct mode).
+	// > 0 - Accumulate lines until this limit is reached.
+	int buffer_size = 32;
+
+	// Maximum time in seconds to hold lines in the buffer before flushing.
+	// Prevents logs from being stuck in memory if the server is quiet.
+	int flush_interval = 5;
+
 	[NonSerialized()]
 	string full_path;
 	[NonSerialized()]

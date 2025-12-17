@@ -36,6 +36,9 @@ modded class MissionServer
 		super.OnMissionFinish();
 	}
 
+	/**
+	    \brief Log player chat messages.
+	*/
 	override void OnEvent(EventType eventTypeId, Param params)
 	{
 		if (eventTypeId != ChatMessageEventTypeID) {

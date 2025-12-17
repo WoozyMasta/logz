@@ -11,6 +11,7 @@ cd /p/logz
 ./tools/update-contstants.sh "$PWD" true
 ./tools/astyle.sh "$PWD"
 ./tools/config.sh "$PWD"
+./tools/metrics.sh "$PWD"
 ./tools/ctags.sh "$PWD"
 
 pbo='/d/SteamLibrary/steamapps/common/DayZ Tools/Bin/AddonBuilder/AddonBuilder.exe'

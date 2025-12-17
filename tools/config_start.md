@@ -18,7 +18,9 @@ Changes require a server restart to take effect.
   "file": {
     "file_name": "",
     "append": 0,
-    "rotation_keep": 5
+    "rotation_keep": 5,
+    "buffer_size": 32,
+    "flush_interval": 5
   },
   "filters": {
     "only_player_inventory_input": 1,

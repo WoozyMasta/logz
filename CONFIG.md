@@ -18,7 +18,9 @@ Changes require a server restart to take effect.
   "file": {
     "file_name": "",
     "append": 0,
-    "rotation_keep": 5
+    "rotation_keep": 5,
+    "buffer_size": 32,
+    "flush_interval": 5
   },
   "filters": {
     "only_player_inventory_input": 1,
@@ -85,6 +87,13 @@ Changes require a server restart to take effect.
 * **`file.rotation_keep`** (`int`) = 5 -
   Number of rotated log files to keep. 0 or 1 - Disables rotation. > 1 -
   Keeps N rotated files (e.g., .0.ndjson, .1.ndjson).
+* **`file.buffer_size`** (`int`) = 32 -
+  Buffer size (in lines) for file writing. 0 - Disable buffer, write each
+  line immediately (Direct mode). > 0 - Accumulate lines until this limit is
+  reached.
+* **`file.flush_interval`** (`int`) = 5 -
+  Maximum time in seconds to hold lines in the buffer before flushing.
+  Prevents logs from being stuck in memory if the server is quiet.
 
 ### LogZ_ConfigDTO_Filters
 

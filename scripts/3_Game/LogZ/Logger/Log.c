@@ -10,12 +10,15 @@
 */
 class LogZ
 {
-	private static FileHandle s_FH;
+	private static ref LogZ_Sink s_Sink;
 	private static ref JsonSerializer s_JS;
 
 #ifdef METRICZ
 	// logging time spent
 	protected static ref MetricZ_MetricFloat s_MetricLogTime;
+	// sink metrics
+	protected static ref MetricZ_MetricInt m_MetricFlushes;
+	protected static ref MetricZ_MetricInt m_MetricBytes;
 	// count log events by level
 	protected static ref MetricZ_MetricInt s_MetricTrace;
 	protected static ref MetricZ_MetricInt s_MetricDebug;
@@ -35,10 +38,9 @@ class LogZ
 		if (!LogZ_Config.IsLoaded())
 			LogZ_Config.Get();
 
-		if (s_FH)
-			CloseFile(s_FH);
-
-		s_FH = OpenFile(LogZ_Config.Get().file.full_path, FileMode.APPEND);
+		// Initialize Sink
+		s_Sink = new LogZ_Sink();
+		s_Sink.Init();
 
 		if (!s_JS)
 			s_JS = new JsonSerializer();
@@ -71,7 +73,7 @@ class LogZ
 	*/
 	static void Log(string msg, LogZ_Level lvl, LogZ_Event eventType = 0, map<string, string> extra = null)
 	{
-		if (!s_FH || !s_JS || !LogZ_Levels.IsEnabled(lvl) || !LogZ_Events.IsEnabled(eventType))
+		if (!s_Sink || !s_JS || !LogZ_Levels.IsEnabled(lvl) || !LogZ_Events.IsEnabled(eventType))
 			return;
 
 #ifdef METRICZ
@@ -101,8 +103,8 @@ class LogZ
 			result += "}";
 		}
 
-		// TODO (array<string>) buffer
-		FPrintln(s_FH, result);
+		// Pass the constructed JSON line to the Sink
+		s_Sink.Write(result);
 
 #ifdef METRICZ
 		s_MetricLogTime.Add(g_Game.GetTickTime() - t0);
@@ -184,17 +186,14 @@ class LogZ
 	}
 
 	/**
-	    \brief Close file handle and log shutdown marker.
+	    \brief Calls shutdown on the Sink.
 	*/
 	static void Close()
 	{
-		if (!s_FH)
-			return;
+		if (s_Sink)
+			s_Sink.Shutdown();
 
-		CloseFile(s_FH);
-		s_FH = null;
-
-		ErrorEx("LogZ stopped", ErrorExSeverity.INFO);
+		ErrorEx("LogZ: stopped", ErrorExSeverity.INFO);
 	}
 
 #ifdef METRICZ
@@ -208,11 +207,29 @@ class LogZ
 			return;
 
 		foreach (MetricZ_MetricBase metric : s_MetricsRegistry) {
-			if (metric == s_MetricLogTime || metric == s_MetricTrace)
+			if (metric == s_MetricLogTime || metric == m_MetricFlushes || metric == m_MetricBytes || metric == s_MetricTrace)
 				metric.FlushWithHead(sink);
 			else
 				metric.Flush(sink);
 		}
+	}
+
+	/**
+	    \brief Increment flushes metric by given value.
+	*/
+	static void MetricFlushesInc()
+	{
+		if (m_MetricFlushes)
+			m_MetricFlushes.Inc();
+	}
+
+	/**
+	    \brief Increment bytes written metric by given value.
+	*/
+	static void MetricBytesAdd(int value)
+	{
+		if (m_MetricBytes)
+			m_MetricBytes.Add(value);
 	}
 
 	/**
@@ -229,6 +246,18 @@ class LogZ
 		    "Total cumulative time in seconds spent collecting and writing logs",
 		    MetricZ_MetricType.COUNTER);
 		s_MetricsRegistry.Insert(s_MetricLogTime);
+
+		m_MetricFlushes = new MetricZ_MetricInt(
+		    "logz_disk_flushes_total",
+		    "Total number of buffer flushes to disk",
+		    MetricZ_MetricType.COUNTER);
+		s_MetricsRegistry.Insert(m_MetricFlushes);
+
+		m_MetricBytes = new MetricZ_MetricInt(
+		    "logz_disk_written_bytes_total",
+		    "Total size of logs written to disk in bytes",
+		    MetricZ_MetricType.COUNTER);
+		s_MetricsRegistry.Insert(m_MetricBytes);
 
 		s_MetricTrace = NewLogMetric(LogZ_Level.TRACE);
 		s_MetricsRegistry.Insert(s_MetricTrace);

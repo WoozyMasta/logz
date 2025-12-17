@@ -6,6 +6,9 @@
 
 #ifdef SERVER
 #ifdef METRICZ
+/**
+        \brief MetricZ collector for LogZ metrics.
+*/
 class MetricZ_Collector_LogZ : MetricZ_CollectorBase
 {
 	override string GetName()
