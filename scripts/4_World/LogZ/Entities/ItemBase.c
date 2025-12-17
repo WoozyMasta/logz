@@ -12,15 +12,15 @@ modded class ItemBase
 
 	bool LogZ_ShouldLogged(bool input)
 	{
-		if (!m_LogZ_InitDone)
+		if (!LogZ_Config.IsLoaded() || !m_LogZ_InitDone)
 			return false;
 
 		// fast path
 		if (input) {
-			if (!LogZ_Config.s_OnlyPlayerInventoryInput)
+			if (!LogZ_Config.Get().filters.only_player_inventory_input)
 				return true;
 		} else {
-			if (!LogZ_Config.s_OnlyPlayerInventoryOutput)
+			if (!LogZ_Config.Get().filters.only_player_inventory_input)
 				return true;
 		}
 

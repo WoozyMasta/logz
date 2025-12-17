@@ -139,7 +139,6 @@ class LogZ_GameLogger
 		if (withStats) {
 			LogZ_DTO_ObjectStats objStatsDTO = new LogZ_DTO_ObjectStats(obj);
 			return LogZ.GetSerializer().WriteToString(objStatsDTO, false, json);
-			return true;
 		}
 
 		LogZ_DTO_Object objDTO = new LogZ_DTO_Object(obj);

@@ -13,6 +13,14 @@ and this project adheres to [Semantic Versioning][].
 ### Removed
 -->
 
+## Unreleased
+
+### Changed
+
+* migrate configuration to `$profile:logz/config.json` file
+* migrate logs storage path to `$profile:logz/logs/`
+* log filenames now include `instance_id` by default (e.g., `logz_1.ndjson`)
+
 ## [0.1.0][] - 2025-11-23
 
 ### Added

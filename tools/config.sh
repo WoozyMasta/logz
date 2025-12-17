@@ -5,7 +5,7 @@ set -euo pipefail
 cd "$PROJECT_DIR"
 
 out=CONFIG.md
-config_file=./scripts/3_Game/LogZ/Utils/Config.c
+config_file=./scripts/3_Game/LogZ/Config/DTO.c
 events_file=./scripts/3_Game/LogZ/Logger/Event.c
 
 # Static template files

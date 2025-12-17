@@ -2,72 +2,122 @@
 
 > Automatically generated configuration reference.
 
-This document lists configuration options and CLI flags used
-by the **LogZ** mod.  
-You can configure the mod via `serverDZ.cfg`
-or via command line parameters (launch parameters).
+Configuration is handled via a JSON file located at `$profile:logz/config.json`.
+Changes require a server restart to take effect.
 
-## Configuration Priority
+## Default Configuration
 
-The mod applies settings in the following order (highest priority first):
+```json
+{
+  "version": "dev",
+  "settings": {
+    "instance_id": "",
+    "level": "info",
+    "events_mask": "ABCDEFGHIJKLMOPQSTUVWXYZ"
+  },
+  "file": {
+    "file_name": "",
+    "append": 0,
+    "rotation_keep": 5
+  },
+  "filters": {
+    "only_player_inventory_input": 1,
+    "only_player_inventory_output": 0,
+    "only_player_suicide": 1
+  },
+  "throttling": {
+    "weapon_fire_ms": 250
+  },
+  "thresholds": {
+    "hit_damage": 3.0,
+    "hit_damage_vehicle": 15.0
+  },
+  "geo": {
+    "world_effective_size": 0
+  }
+}
+```
 
-1. **CLI Flags**:
-  Launch parameters (e.g., `-logz-level=debug`) override everything.
-2. **Server Config**:
-  Settings in `serverDZ.cfg` (e.g., `LogZ_Level = 1;`).
-3. **Defaults**:
-  Hardcoded fallback values if nothing is specified.
+## Options [Config/DTO.c](./scripts/3_Game/LogZ/Config/DTO.c)
 
-## Value Types
 
-* **Boolean**:
-  * Config: `1` (true) or `0` (false).
-  * CLI: `true`, `1` (enable) or `false`, `0` (disable).
-* **Enum**: Case-insensitive strings (e.g., `Trace`, `Info`)
-  or their numeric equivalents.
+### LogZ_ConfigDTO
 
-## Options [Utils/Config.c](./scripts/3_Game/LogZ/Utils/Config.c)
+* **`version`** (`string`) = LogZ_Constants.VERSION -
+  Internal configuration version. **Do not modify**.
+* **`settings`** (`ref LogZ_ConfigDTO_Settings`) -
+  General logging settings.
+* **`file`** (`ref LogZ_ConfigDTO_File`) -
+  File output and rotation settings.
+* **`filters`** (`ref LogZ_ConfigDTO_Filters`) -
+  Logic filters for specific events.
+* **`throttling`** (`ref LogZ_ConfigDTO_Throttling`) -
+  Throttling settings to prevent log spam.
+* **`thresholds`** (`ref LogZ_ConfigDTO_Thresholds`) -
+  Damage thresholds for hit events.
+* **`geo`** (`ref LogZ_ConfigDTO_Geo`) -
+  Geographic coordinate settings.
 
-* **`LogZ_FileAppend`**
-  `-logz-file-append`
-  — Enable append mode for base log file. Config: non-zero enables, CLI:
- `true`, `1`, or empty enables.
-* **`LogZ_FilesKeep`**
-  `-logz-files-keep`
-  (default: `1`)
-  — Number of rotated log files to keep [0..100]; `1` or less disables
- rotation.
-* **`LogZ_Level`**
-  `-logz-level`
-  (default: `LogZ_Level.INFO`)
-  — Minimum severity for logging. Accepts enum number or:
- `trace|debug|info|warn|error|fatal|off` (can be one letter like `i` or
- `e`). Default is `INFO`.
-* **`LogZ_EventsMask`**
-  `-logz-events-mask`
-  — Event bitmask for logging. Config: numeric int or -1 to disable all. CLI:
- numeric int or letters A-Z/a-z (e.g. `ABKqz`).
-* **`LogZ_OnlyPlayerInventoryInput`**
-  `-logz-only-player-inventory-input`
-  — Log `INVENTORY_IN` only when item parent is player.
-* **`LogZ_OnlyPlayerInventoryOutput`**
-  `-logz-only-player-inventory-output`
-  — Log `INVENTORY_OUT` only when item parent is player.
-* **`LogZ_OnlyPlayerSuicide`**
-  `-logz-only-player-suicide`
-  — Log suicides (when killer is same object) only for players.
-* **`LogZ_WeaponFireThrottlingMs`**
-  `-logz-weapon-fire-throttling`
-  (default: `250`)
-  — Weapon `OnFire()` throttling window in milliseconds.
-* **`LogZ_EntityHitDamageThreshold`**
-  `-logz-entity-hit-damage-threshold`
-  (default: `1`)
-  — Minimum damage to log in `EEHitBy()`; -1 disables threshold.
-* **`LogZ_EntityVehicleHitDamageThreshold`**
-  `-logz-entity-vehicle-hit-damage-threshold`
-  (default: `15`)
-  — Minimum vehicle-hit damage to log in `EEHitBy()`; -1 disables threshold.
+### LogZ_ConfigDTO_Settings
+
+* **`settings.instance_id`** (`string`) -
+  Overrides the Instance ID. By default, this is detected automatically from
+  serverDZ.cfg instanceID, or uses gamePort/steamQueryPort if instanceID is
+  undefined or zero. Used for log file naming.
+* **`settings.level`** (`string`) = "info" -
+  Minimum severity level for logging. Values: `trace`, `debug`, `info`,
+  `warn`, `error`, `fatal`, `off`. Default is `info`.
+* **`settings.events_mask`** (`string`) = "ABCDEFGHIJKLMOPQSTUVWXYZ" -
+  Event mask configuration. Can be a specific bitmask integer or a string of
+  characters representing event categories. Example: "ABKqz" or "-1" (for
+  all).
+* **`settings.disable_telemetry`** (`bool`) -
+  Disable send minimal telemetry 10-20 minutes after server startup.
+
+### LogZ_ConfigDTO_File
+
+* **`file.file_name`** (`string`) -
+  Log file name override (without extension). Default file path
+  `$profile:logz/logs/logz_${instance_id}.ndjson`.
+* **`file.append`** (`bool`) -
+  Enables append mode. true - New logs are appended to the existing file.
+  false - The log file is truncated (cleared) on server start.
+* **`file.rotation_keep`** (`int`) = 5 -
+  Number of rotated log files to keep. 0 or 1 - Disables rotation. > 1 -
+  Keeps N rotated files (e.g., .0.ndjson, .1.ndjson).
+
+### LogZ_ConfigDTO_Filters
+
+* **`filters.only_player_inventory_input`** (`bool`) = true -
+  Log `INVENTORY_IN` events only when the item's parent is a player. Reduces
+  spam from item spawning on ground/zombies.
+* **`filters.only_player_inventory_output`** (`bool`) -
+  Log `INVENTORY_OUT` events only when the item's parent is a player.
+* **`filters.only_player_suicide`** (`bool`) = true -
+  Log suicide events (killer == victim) only for players. Filters out
+  zombies/animals killing themselves via glitches.
+
+### LogZ_ConfigDTO_Throttling
+
+* **`throttling.weapon_fire_ms`** (`int`) = 250 -
+  Throttling window in milliseconds for Weapon `OnFire()` events. Prevents
+  logging every single shot for high RPM weapons.
+
+### LogZ_ConfigDTO_Thresholds
+
+* **`thresholds.hit_damage`** (`float`) = 3.0 -
+  Minimum damage required to log hit events in `EEHitBy()`. Values of -1 or
+  less disable this threshold.
+* **`thresholds.hit_damage_vehicle`** (`float`) = 15.0 -
+  Minimum damage from vehicles required to log hit events. Values of -1 or
+  less disable this threshold.
+
+### LogZ_ConfigDTO_Geo
+
+* **`geo.world_effective_size`** (`float`) -
+  Overrides the effective map tile size in world units. Useful if the web
+  map size is larger than the game world size. (For example, iZurvive tiles
+  for Chernarus have a size of `15926`, although the world size is `15360`).
 
 ## Event Filters
 
@@ -84,7 +134,7 @@ the letters corresponding to the events you want.
 
 * **Case insensitive**: `abc` is the same as `ABC`.
 * **Format**: Just a string of letters.
-* **Example**: `-logz-events-mask="AFG"`
+* **Example**: `settings.events_mask: "AFG"`
   logs Server (A), Sessions (F), and Chat (G).
 
 ### Using Integers

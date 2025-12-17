@@ -6,16 +6,16 @@
 
 #ifdef SERVER
 #ifdef METRICZ
-modded class MetricZ_Exporter
+class MetricZ_Collector_LogZ : MetricZ_CollectorBase
 {
-	override bool Flush(FileHandle fh)
+	override string GetName()
 	{
-		if (!super.Flush(fh))
-			return false;
+		return "logz";
+	}
 
-		LogZ.FlushMetrics(fh);
-
-		return true;
+	override void Flush(MetricZ_SinkBase sink)
+	{
+		LogZ.FlushMetrics(sink);
 	}
 }
 #endif

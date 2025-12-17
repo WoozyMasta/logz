@@ -59,5 +59,15 @@ We recommend using the following root fields as [b]Labels (Tags)[/b] for efficie
 
 [hr][/hr]
 
+[h2]Complete your stack with MetricZ[/h2]
+To get the full picture, use [b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3594119002]MetricZ[/url][/b] alongside LogZ.
+[list]
+[*] [b]LogZ[/b] tracks [i]logs[/i] (Detailed events, combat history, economy flows)
+[*] [b]MetricZ[/b] tracks [i]metrics[/i] (Server FPS, total entity counts, vehicle numbers)
+[/list]
+Together they allow you to visualize not just [i]what[/i] happened, but how it impacted server performance (e.g., did that massive explosion drop the FPS?).
+
+[hr][/hr]
+
 [h2]Source & docs[/h2]
 GitHub: [url=https://github.com/WoozyMasta/logz]WoozyMasta/logz[/url]

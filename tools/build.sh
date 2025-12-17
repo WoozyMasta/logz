@@ -8,6 +8,7 @@ url() {
 cd /p/logz
 
 ./tools/validate.sh "$PWD"
+./tools/update-contstants.sh "$PWD" true
 ./tools/astyle.sh "$PWD"
 ./tools/config.sh "$PWD"
 ./tools/ctags.sh "$PWD"
@@ -22,3 +23,5 @@ cp README.md CONFIG.md /p/\@logz/
 
 url 'https://steamcommunity.com/sharedfiles/filedetails/?id=3610709966' workshop
 url 'https://github.com/WoozyMasta/logz' github
+
+./tools/update-contstants.sh "$PWD" false

@@ -19,6 +19,10 @@ modded class MissionServer
 
 		super.OnInit();
 
+#ifdef METRICZ
+		MetricZ_Exporter.Register(new MetricZ_Collector_LogZ());
+#endif
+
 		// LogZ_Test.Run();
 	}
 

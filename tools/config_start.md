@@ -2,26 +2,38 @@
 
 > Automatically generated configuration reference.
 
-This document lists configuration options and CLI flags used
-by the **LogZ** mod.  
-You can configure the mod via `serverDZ.cfg`
-or via command line parameters (launch parameters).
+Configuration is handled via a JSON file located at `$profile:logz/config.json`.
+Changes require a server restart to take effect.
 
-## Configuration Priority
+## Default Configuration
 
-The mod applies settings in the following order (highest priority first):
-
-1. **CLI Flags**:
-  Launch parameters (e.g., `-logz-level=debug`) override everything.
-2. **Server Config**:
-  Settings in `serverDZ.cfg` (e.g., `LogZ_Level = 1;`).
-3. **Defaults**:
-  Hardcoded fallback values if nothing is specified.
-
-## Value Types
-
-* **Boolean**:
-  * Config: `1` (true) or `0` (false).
-  * CLI: `true`, `1` (enable) or `false`, `0` (disable).
-* **Enum**: Case-insensitive strings (e.g., `Trace`, `Info`)
-  or their numeric equivalents.
+```json
+{
+  "version": "dev",
+  "settings": {
+    "instance_id": "",
+    "level": "info",
+    "events_mask": "ABCDEFGHIJKLMOPQSTUVWXYZ"
+  },
+  "file": {
+    "file_name": "",
+    "append": 0,
+    "rotation_keep": 5
+  },
+  "filters": {
+    "only_player_inventory_input": 1,
+    "only_player_inventory_output": 0,
+    "only_player_suicide": 1
+  },
+  "throttling": {
+    "weapon_fire_ms": 250
+  },
+  "thresholds": {
+    "hit_damage": 3.0,
+    "hit_damage_vehicle": 15.0
+  },
+  "geo": {
+    "world_effective_size": 0
+  }
+}
+```

@@ -19,6 +19,17 @@ statistics and analytics. The main goals are not to spam with noisy events
 but to provide server administrators with the most important and useful data
 to study player activity and behavior.
 
+> [!WARNING]  
+> **BETA VERSION**
+>
+> This mod is currently in **BETA**.
+>
+> * The log structure, configuration schema, internal API,
+>   and file paths **are subject to change** without backward compatibility.
+> * It is **not recommended for use in production environments**
+>   where data stability is critical.
+> * Please check the changelogs carefully when updating.
+
 <!-- markdownlint-disable-next-line MD033 -->
 <br clear="right"/>
 
@@ -54,27 +65,18 @@ to study player activity and behavior.
 
 1. Install the mod on the server. Subscribe via Workshop or download the PBO
    from releases. A key is not required for a server-side mod!
-2. Add `-servermod=@LogZ` to the server launch parameters.
-3. Configure parameters in `serverDZ.cfg` or via launch arguments
-   (optional).
-4. Start the server. The log file will be created at `$profile:logz.ndjson`.
+1. Add `-servermod=@LogZ` to the server launch parameters.
+1. Start the server.
+1. The configuration file will be automatically created at
+   `$profile:logz/config.json`.
+1. Logs will be written to `$profile:logz/logs/`.
 
 ## Configuration
 
-Main settings are configured via `serverDZ.cfg` or launch parameters (CLI).
-See [CONFIG.md](./CONFIG.md) for a full description of all parameters.
+Configuration is handled via a JSON file located at `$profile:logz/config.json`.
+Changes require a server restart to take effect.
 
-Some balanced configuration example:
-
-```shell
-./DayZServer \
-  -logz-level=info \
-  -logz-events-mask=ABCDEFGHIJKLMOPQSTUVWXYZ \
-  -logz-files-keep=2 \
-  -logz-only-player-inventory-input \
-  -logz-only-player-suicide \
-  ...
-```
+See [CONFIG.md](./CONFIG.md) for a detailed description of all parameters.
 
 ## Output Examples
 

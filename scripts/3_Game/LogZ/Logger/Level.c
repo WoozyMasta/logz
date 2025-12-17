@@ -31,7 +31,10 @@ class LogZ_Levels
 		if (lvl < 0 || lvl >= LogZ_Level.OFF)
 			return false;
 
-		return (lvl >= LogZ_Config.s_Level);
+		if (!LogZ_Config.IsLoaded())
+			return false;
+
+		return (lvl >= LogZ_Config.Get().settings.level_enum);
 	}
 
 	/**

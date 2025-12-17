@@ -32,12 +32,13 @@ class LogZ
 	*/
 	static void Init()
 	{
-		LogZ_Config.Load();
+		if (!LogZ_Config.IsLoaded())
+			LogZ_Config.Get();
 
 		if (s_FH)
 			CloseFile(s_FH);
 
-		s_FH = OpenFile(LogZ_Config.LOG_FILE, FileMode.APPEND);
+		s_FH = OpenFile(LogZ_Config.Get().file.full_path, FileMode.APPEND);
 
 		if (!s_JS)
 			s_JS = new JsonSerializer();
@@ -45,8 +46,6 @@ class LogZ
 #ifdef METRICZ
 		InitMetrics();
 #endif
-
-		ErrorEx("LogZ loaded", ErrorExSeverity.INFO);
 	}
 
 	/**
@@ -203,16 +202,16 @@ class LogZ
 	    \brief Flush all registered LogZ metrics into given file.
 	    \param fh Open file handle for metrics output.
 	*/
-	static void FlushMetrics(FileHandle fh)
+	static void FlushMetrics(MetricZ_SinkBase sink)
 	{
 		if (s_MetricsRegistry.Count() < 1)
 			return;
 
 		foreach (MetricZ_MetricBase metric : s_MetricsRegistry) {
 			if (metric == s_MetricLogTime || metric == s_MetricTrace)
-				metric.FlushWithHead(fh);
+				metric.FlushWithHead(sink);
 			else
-				metric.Flush(fh);
+				metric.Flush(sink);
 		}
 	}
 

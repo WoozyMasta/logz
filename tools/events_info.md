@@ -13,7 +13,7 @@ the letters corresponding to the events you want.
 
 * **Case insensitive**: `abc` is the same as `ABC`.
 * **Format**: Just a string of letters.
-* **Example**: `-logz-events-mask="AFG"`
+* **Example**: `settings.events_mask: "AFG"`
   logs Server (A), Sessions (F), and Chat (G).
 
 ### Using Integers

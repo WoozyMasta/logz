@@ -9,11 +9,18 @@ class LogZ_Test
 {
 	static void Run()
 	{
-		LogZ_Level oldLevel = LogZ_Config.s_Level;
-		int oldEvent = LogZ_Config.s_EventsMask;
+		if (!LogZ_Config.IsLoaded()) {
+			ErrorEx("LogZ: [Test] Config not loaded", ErrorExSeverity.ERROR);
+			return;
+		}
 
-		LogZ_Config.s_Level = LogZ_Level.TRACE;
-		LogZ_Config.s_EventsMask = LogZ_Event.MAX;
+		LogZ_ConfigDTO_Settings settings = LogZ_Config.Get().settings;
+
+		LogZ_Level oldLevel = settings.level_enum;
+		int oldEvent = settings.events_mask_int;
+
+		settings.level_enum = LogZ_Level.TRACE;
+		settings.events_mask_int = LogZ_Event.MAX;
 
 		ref map<string, string> m = new map<string, string>();
 
@@ -67,8 +74,8 @@ class LogZ_Test
 		}
 		LogZ.Error(megaLine, LogZ_Event.SYSTEM_GAME);
 
-		LogZ_Config.s_Level = oldLevel;
-		LogZ_Config.s_EventsMask = oldEvent;
+		settings.level_enum = oldLevel;
+		settings.events_mask_int = oldEvent;
 	}
 }
 #endif

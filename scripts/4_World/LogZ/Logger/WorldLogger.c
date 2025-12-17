@@ -43,10 +43,10 @@ class LogZ_WorldLogger
 	*/
 	static void WithKiller(Object victim, Object killer, LogZ_Level lvl = 2)
 	{
-		if (!victim || !LogZ_Levels.IsEnabled(lvl))
+		if (!LogZ_Config.IsLoaded() || !victim || !LogZ_Levels.IsEnabled(lvl))
 			return;
 
-		if (LogZ_Config.s_OnlyPlayerSuicide && killer == victim)
+		if (LogZ_Config.Get().filters.only_player_suicide && killer == victim)
 			return;
 
 		LogZ_Event eventType = ResolveVictimEvent(victim, false);
@@ -97,7 +97,7 @@ class LogZ_WorldLogger
 	*/
 	static void WithHit(Object victim, EntityAI source, TotalDamageResult damageResult, int damageType, string dmgZone, string ammo, LogZ_Level lvl = 2)
 	{
-		if (!victim || victim.IsDamageDestroyed() || !LogZ_Levels.IsEnabled(lvl))
+		if (!LogZ_Config.IsLoaded() || !victim || victim.IsDamageDestroyed() || !LogZ_Levels.IsEnabled(lvl))
 			return;
 
 		LogZ_Event eventType = ResolveVictimEvent(victim, true);
@@ -106,10 +106,10 @@ class LogZ_WorldLogger
 
 		if (damageResult) {
 			float damage = damageResult.GetDamage(dmgZone, "");
-			if (damage < LogZ_Config.s_EntityHitDamageThreshold)
+			if (damage < LogZ_Config.Get().thresholds.hit_damage)
 				return;
 
-			if (source && source.IsTransport() && damage < LogZ_Config.s_EntityVehicleHitDamageThreshold)
+			if (source && source.IsTransport() && damage < LogZ_Config.Get().thresholds.hit_damage_vehicle)
 				return;
 		}
 

@@ -85,7 +85,10 @@ class LogZ_Events
 		if (eventType <= LogZ_Event.NONE || eventType >= LogZ_Event.MAX)
 			return false;
 
-		return (LogZ_Config.s_EventsMask & eventType) != 0;
+		if (!LogZ_Config.IsLoaded())
+			return false;
+
+		return (LogZ_Config.Get().settings.events_mask_int & eventType) != 0;
 	}
 
 	/**

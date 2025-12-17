@@ -12,13 +12,13 @@ modded class ZombieBase
 
 	bool LogZ_ShouldLogged(bool input)
 	{
-		if (!m_LogZ_InitDone)
+		if (!LogZ_Config.IsLoaded() || !m_LogZ_InitDone)
 			return false;
 
 		if (input)
-			return !LogZ_Config.s_OnlyPlayerInventoryInput;
+			return !LogZ_Config.Get().filters.only_player_inventory_input;
 
-		return !LogZ_Config.s_OnlyPlayerInventoryOutput;
+		return !LogZ_Config.Get().filters.only_player_inventory_input;
 	}
 
 	bool LogZ_IsAlreadyKilled()

@@ -12,8 +12,10 @@ class LogZ_DTO_Object_Base
 {
 	string name;
 	string type;
-	vector pos;
 	int yaw;
+	vector pos;
+	float lon;
+	float lat;
 	float health;
 
 	/**
@@ -26,8 +28,9 @@ class LogZ_DTO_Object_Base
 
 		name = LogZ_Object.GetName(obj);
 		type = LogZ_Object.GetType(obj);
-		pos = obj.GetPosition();
 		yaw = Math.Round(obj.GetOrientation()[0]);
+		pos = obj.GetPosition();
+		LogZ_Geo.GetLonLat(pos, lon, lat);
 		health = obj.GetHealth01("", "Health");
 	}
 }

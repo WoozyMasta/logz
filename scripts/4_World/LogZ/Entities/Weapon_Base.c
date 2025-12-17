@@ -16,8 +16,11 @@ modded class Weapon_Base
 	{
 		super.OnFire(muzzle_index);
 
+		if (!LogZ_Config.IsLoaded())
+			return;
+
 		int time = g_Game.GetTime();
-		if ((time - m_LogZ_LastFireTime) < LogZ_Config.s_WeaponFireThrottlingMs)
+		if ((time - m_LogZ_LastFireTime) < LogZ_Config.Get().throttling.weapon_fire_ms)
 			return;
 
 		m_LogZ_LastFireTime = time;
