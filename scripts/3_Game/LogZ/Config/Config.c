@@ -96,7 +96,7 @@ class LogZ_Config
 
 			s_Config.Normalize();
 
-			// Version check & migration (if needed in future)
+			// Version check anf migration
 			if (s_Config.version != LogZ_Constants.VERSION) {
 				s_Config.version = LogZ_Constants.VERSION;
 
@@ -151,7 +151,7 @@ class LogZ_Config
 
 			string fileName = s_Config.file.file_name;
 			if (fileName == string.Empty)
-				fileName = "logz_" + s_Config.settings.instance_id;
+				fileName = "logz_" + s_Config.settings.instance_id_resolved;
 
 			s_Config.file.base_path = logsDir + fileName;
 			s_Config.file.full_path = s_Config.file.base_path + LogZ_Constants.LOG_EXT;
@@ -217,12 +217,13 @@ class LogZ_Config
 #endif
 
 		string ver = string.Format(
-		                 "%1 (%2) build %3, log_level=%4, events_mask=0x%5",
+		                 "%1 (%2) build %3, log_level=%4, events_mask=0x%5, instance_id=%6",
 		                 LogZ_Constants.VERSION,
 		                 LogZ_Constants.COMMIT_SHA,
 		                 LogZ_Constants.BUILD_DATE,
 		                 LogZ_Levels.ToString(s_Config.settings.level_enum),
-		                 s_Config.settings.events_mask_int);
+		                 s_Config.settings.events_mask_int,
+		                 s_Config.settings.instance_id_resolved);
 
 		ErrorEx("LogZ: loaded " + ver, ErrorExSeverity.INFO);
 	}

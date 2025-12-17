@@ -24,6 +24,8 @@ and this project adheres to [Semantic Versioning][].
   Total number of buffer flushes to disk
 * metric **`dayz_metricz_logz_disk_written_bytes_total_total`** (`COUNTER`) —
   Total size of logs written to disk in bytes
+* new options `settings.instance_id` and `settings.host_name` for overriding
+  autodetected values
 
 ### Changed
 

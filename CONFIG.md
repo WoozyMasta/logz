@@ -42,8 +42,7 @@ Changes require a server restart to take effect.
 
 ## Options [Config/DTO.c](./scripts/3_Game/LogZ/Config/DTO.c)
 
-
-### LogZ_ConfigDTO
+### Config
 
 * **`version`** (`string`) = LogZ_Constants.VERSION -
   Internal configuration version. **Do not modify**.
@@ -60,12 +59,17 @@ Changes require a server restart to take effect.
 * **`geo`** (`ref LogZ_ConfigDTO_Geo`) -
   Geographic coordinate settings.
 
-### LogZ_ConfigDTO_Settings
+### Settings
 
 * **`settings.instance_id`** (`string`) -
   Overrides the Instance ID. By default, this is detected automatically from
   serverDZ.cfg instanceID, or uses gamePort/steamQueryPort if instanceID is
   undefined or zero. Used for log file naming.
+* **`settings.host_name`** (`string`) -
+  Overrides the Host Name. By default, attempts to obtain it automatically.
+  In some environments, reading the host name may be limited and
+  unavailable. You can use this if you want to explicitly override the host
+  name.
 * **`settings.level`** (`string`) = "info" -
   Minimum severity level for logging. Values: `trace`, `debug`, `info`,
   `warn`, `error`, `fatal`, `off`. Default is `info`.
@@ -76,7 +80,7 @@ Changes require a server restart to take effect.
 * **`settings.disable_telemetry`** (`bool`) -
   Disable send minimal telemetry 10-20 minutes after server startup.
 
-### LogZ_ConfigDTO_File
+### File
 
 * **`file.file_name`** (`string`) -
   Log file name override (without extension). Default file path
@@ -95,7 +99,7 @@ Changes require a server restart to take effect.
   Maximum time in seconds to hold lines in the buffer before flushing.
   Prevents logs from being stuck in memory if the server is quiet.
 
-### LogZ_ConfigDTO_Filters
+### Filters
 
 * **`filters.only_player_inventory_input`** (`bool`) = true -
   Log `INVENTORY_IN` events only when the item's parent is a player. Reduces
@@ -106,13 +110,13 @@ Changes require a server restart to take effect.
   Log suicide events (killer == victim) only for players. Filters out
   zombies/animals killing themselves via glitches.
 
-### LogZ_ConfigDTO_Throttling
+### Throttling
 
 * **`throttling.weapon_fire_ms`** (`int`) = 250 -
   Throttling window in milliseconds for Weapon `OnFire()` events. Prevents
   logging every single shot for high RPM weapons.
 
-### LogZ_ConfigDTO_Thresholds
+### Thresholds
 
 * **`thresholds.hit_damage`** (`float`) = 3.0 -
   Minimum damage required to log hit events in `EEHitBy()`. Values of -1 or
@@ -121,7 +125,7 @@ Changes require a server restart to take effect.
   Minimum damage from vehicles required to log hit events. Values of -1 or
   less disable this threshold.
 
-### LogZ_ConfigDTO_Geo
+### Geo
 
 * **`geo.world_effective_size`** (`float`) -
   Overrides the effective map tile size in world units. Useful if the web

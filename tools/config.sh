@@ -14,7 +14,7 @@ events_info_md=tools/events_info.md
 
 {
   cat "$start_md" >"$out"
-  printf '\n## Options [%s](%s)\n\n' "${config_file##*LogZ/}" "$config_file"
+  printf '\n## Options [%s](%s)\n' "${config_file##*LogZ/}" "$config_file"
   awk -f tools/config_extract.awk "$config_file"
 
   printf '\n'

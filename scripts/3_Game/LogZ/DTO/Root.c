@@ -35,7 +35,7 @@ class LogZ_DTO_Root
 		ts = LogZ_Time.EpochSecondsUTC();
 		uptime_ms = g_Game.GetTime();
 		world_time = LogZ_Time.GameEpochSeconds();
-		instance = cfg.settings.instance_id;
+		instance = cfg.settings.instance_id_resolved;
 		level = LogZ_Levels.ToString(lvl);
 		schema = LogZ_Constants.SCHEMA_VERSION;
 		world = cfg.geo.world_name;

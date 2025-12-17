@@ -62,6 +62,11 @@ class LogZ_ConfigDTO_Settings
 	// Used for log file naming.
 	string instance_id;
 
+	// Overrides the Host Name. By default, attempts to obtain it automatically.
+	// In some environments, reading the host name may be limited and unavailable.
+	// You can use this if you want to explicitly override the host name.
+	string host_name;
+
 	// Minimum severity level for logging.
 	// Values: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `off`.
 	// Default is `info`.
@@ -76,6 +81,12 @@ class LogZ_ConfigDTO_Settings
 	bool disable_telemetry;
 
 	[NonSerialized()]
+	string instance_id_resolved;
+
+	[NonSerialized()]
+	string host_name_resolved;
+
+	[NonSerialized()]
 	LogZ_Level level_enum;
 
 	[NonSerialized()]
@@ -86,7 +97,16 @@ class LogZ_ConfigDTO_Settings
 	*/
 	void Normalize()
 	{
-		instance_id = LogZ_Helpers.GetInstanceID(instance_id);
+		instance_id_resolved = LogZ_Helpers.GetInstanceID(instance_id);
+
+		if (host_name != string.Empty)
+			host_name_resolved = host_name;
+		else {
+			string host = GetMachineName();
+			host.TrimInPlace();
+			host.ToLower();
+			host_name_resolved = host;
+		}
 
 		// Convert string level to enum
 		level_enum = LogZ_Levels.FromString(level);
@@ -207,6 +227,9 @@ class LogZ_ConfigDTO_Geo
 	float world_effective_size;
 
 	[NonSerialized()]
+	float world_effective_size_resolved;
+
+	[NonSerialized()]
 	string world_name;
 
 	/**
@@ -217,11 +240,16 @@ class LogZ_ConfigDTO_Geo
 		if (!g_Game)
 			return;
 
-		world_effective_size = Math.Clamp(world_effective_size, g_Game.GetWorld().GetWorldSize(), 81920);
+		if (world_effective_size != 0) {
+			world_effective_size = Math.Clamp(world_effective_size, 1000, 81920);
+			world_effective_size_resolved = world_effective_size;
+		} else {
+			world_effective_size_resolved = g_Game.GetWorld().GetWorldSize();
 
-		g_Game.GetWorldName(world_name);
-		world_name.TrimInPlace();
-		world_name.ToLower();
+			g_Game.GetWorldName(world_name);
+			world_name.TrimInPlace();
+			world_name.ToLower();
+		}
 	}
 }
 #endif

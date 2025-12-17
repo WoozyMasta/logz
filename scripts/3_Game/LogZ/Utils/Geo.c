@@ -84,8 +84,8 @@ class LogZ_Geo
 		s_mapEffectiveSize = g_Game.GetWorld().GetWorldSize();
 
 		// apply config override
-		if (LogZ_Config.Get().geo.world_effective_size > 0)
-			s_mapEffectiveSize = LogZ_Config.Get().geo.world_effective_size;
+		if (LogZ_Config.Get().geo.world_effective_size_resolved > 0)
+			s_mapEffectiveSize = LogZ_Config.Get().geo.world_effective_size_resolved;
 		if (s_mapEffectiveSize <= 0)
 			s_mapEffectiveSize = 15360;
 

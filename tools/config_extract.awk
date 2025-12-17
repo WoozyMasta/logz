@@ -92,10 +92,10 @@ in_comment_block {
     current_prefix = ""
   }
 
-  if (class_name == "MetricZ_ConfigDTO") {
+  if (class_name == "LogZ_ConfigDTO") {
     display_name = "Config"
   } else {
-    sub(/^MetricZ_ConfigDTO_/, "", class_name)
+    sub(/^LogZ_ConfigDTO_/, "", class_name)
     display_name = class_name
   }
 
