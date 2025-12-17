@@ -20,7 +20,7 @@ mod='P:\@logz\addons'
 include="$src"'\tools\pbo_include.txt'
 
 "$pbo" "$src" "$mod" -clear -include="$include" -prefix="logz"
-cp README.md CONFIG.md /p/\@logz/
+cp README.md CONFIG.md METRICS.md /p/\@logz/
 
 url 'https://steamcommunity.com/sharedfiles/filedetails/?id=3610709966' workshop
 url 'https://github.com/WoozyMasta/logz' github
