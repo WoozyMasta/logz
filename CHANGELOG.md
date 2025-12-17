@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning][].
 ### Removed
 -->
 
-## Unreleased
+## [0.2.0][] - 2025-12-17
 
 ### Added
 
@@ -32,6 +32,8 @@ and this project adheres to [Semantic Versioning][].
 * migrate configuration to `$profile:logz/config.json` file
 * migrate logs storage path to `$profile:logz/logs/`
 * log filenames now include `instance_id` by default (e.g., `logz_1.ndjson`)
+
+[0.2.0]: https://github.com/WoozyMasta/logz/compare/0.1.0...0.2.0
 
 ## [0.1.0][] - 2025-11-23
 
