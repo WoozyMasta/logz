@@ -14,7 +14,7 @@ modded class EffectArea
 		if (player)
 			LogZ_GameLogger.WithObjectAndOwner(
 			    player, trigger,
-			    "player enter effect area " + ClassName(),
+			    string.Format("player enter effect area %1", ClassName()),
 			    LogZ_Level.INFO, LogZ_Event.EVENT_IN);
 	}
 
@@ -25,7 +25,7 @@ modded class EffectArea
 		if (player)
 			LogZ_GameLogger.WithObjectAndOwner(
 			    player, trigger,
-			    "player leave effect area " + ClassName(),
+			    string.Format("player leave effect area %1", ClassName()),
 			    LogZ_Level.INFO, LogZ_Event.EVENT_OUT);
 	}
 }

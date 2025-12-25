@@ -55,7 +55,7 @@ modded class MissionServer
 			if (man)
 				LogZ_GameLogger.WithObject(man, msg, LogZ_Level.INFO, LogZ_Event.PLAYER_CHAT);
 			else
-				LogZ.Info("chat message sender " + sender + " say: " + msg, LogZ_Event.PLAYER_CHAT);
+				LogZ.Info(string.Format("chat message sender %1 say: %2", sender, msg), LogZ_Event.PLAYER_CHAT);
 		}
 
 		super.OnEvent(eventTypeId, params);

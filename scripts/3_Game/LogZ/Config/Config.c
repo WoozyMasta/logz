@@ -151,7 +151,7 @@ class LogZ_Config
 
 			string fileName = s_Config.file.file_name;
 			if (fileName == string.Empty)
-				fileName = "logz_" + s_Config.settings.instance_id_resolved;
+				fileName = string.Format("logz_%1", s_Config.settings.instance_id_resolved);
 
 			s_Config.file.base_path = logsDir + fileName;
 			s_Config.file.full_path = s_Config.file.base_path + LogZ_Constants.LOG_EXT;
@@ -177,7 +177,7 @@ class LogZ_Config
 		string ext = LogZ_Constants.LOG_EXT;
 
 		// delete last
-		string last = s_Config.file.base_path + "." + (s_Config.file.rotation_keep - 1).ToString() + ext;
+		string last = string.Format("%1.%2%3", s_Config.file.base_path, s_Config.file.rotation_keep - 1, ext);
 		if (FileExist(last))
 			DeleteFile(last);
 
@@ -185,9 +185,9 @@ class LogZ_Config
 		for (int i = s_Config.file.rotation_keep - 2; i >= 0; i--) {
 			string srcLog = s_Config.file.full_path;
 			if (i != 0)
-				srcLog = s_Config.file.base_path + "." + i.ToString() + ext;
+				srcLog = string.Format("%1.%2%3", s_Config.file.base_path, i, ext);
 
-			string dstLog = s_Config.file.base_path + "." + (i + 1).ToString() + ext;
+			string dstLog = string.Format("%1.%2%3", s_Config.file.base_path, i + 1, ext);
 
 			if (FileExist(srcLog)) {
 				CopyFile(srcLog, dstLog);
@@ -216,16 +216,16 @@ class LogZ_Config
 		}
 #endif
 
-		string ver = string.Format(
-		                 "%1 (%2) build %3, log_level=%4, events_mask=0x%5, instance_id=%6",
-		                 LogZ_Constants.VERSION,
-		                 LogZ_Constants.COMMIT_SHA,
-		                 LogZ_Constants.BUILD_DATE,
-		                 LogZ_Levels.ToString(s_Config.settings.level_enum),
-		                 s_Config.settings.events_mask_int,
-		                 s_Config.settings.instance_id_resolved);
-
-		ErrorEx("LogZ: loaded " + ver, ErrorExSeverity.INFO);
+		ErrorEx(
+		    string.Format(
+		        "LogZ: loaded %1 (%2) build %3, log_level=%4, events_mask=0x%5, instance_id=%6",
+		        LogZ_Constants.VERSION,
+		        LogZ_Constants.COMMIT_SHA,
+		        LogZ_Constants.BUILD_DATE,
+		        LogZ_Levels.ToString(s_Config.settings.level_enum),
+		        s_Config.settings.events_mask_int,
+		        s_Config.settings.instance_id_resolved),
+		    ErrorExSeverity.INFO);
 	}
 
 	/**

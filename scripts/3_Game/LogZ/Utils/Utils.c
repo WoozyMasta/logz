@@ -20,7 +20,7 @@ class LogZ_Utils
 			return false;
 
 		int len = s.Length();
-		for (int i = 0; i < len; i++) {
+		for (int i = 0; i < len; ++i) {
 			int c = s.Get(i).ToAscii();
 			if (c < 48 || c > 57) // '0'..'9'
 				return false;
@@ -38,7 +38,7 @@ class LogZ_Utils
 			return false;
 
 		int len = s.Length();
-		for (int i = 0; i < len; i++) {
+		for (int i = 0; i < len; ++i) {
 			int c = s.Get(i).ToAscii();
 			if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122)) // 'A'..'Z' or 'a'..'z'
 				return true;

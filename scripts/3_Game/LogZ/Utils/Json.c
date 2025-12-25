@@ -25,7 +25,7 @@ class LogZ_Json
 		string result = "";
 		int n = input.LengthUtf8();
 
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < n; ++i) {
 			string chars = input.SubstringUtf8(i, 1);
 			int ascii = chars.ToAscii();
 
@@ -81,7 +81,7 @@ class LogZ_Json
 			array<string> raw = new array<string>();
 			vec.Split(" ", raw);
 
-			for (int i = 0; i < raw.Count(); i++) {
+			for (int i = 0; i < raw.Count(); ++i) {
 				string t = raw[i];
 				if (!t)
 					continue;
@@ -93,7 +93,7 @@ class LogZ_Json
 
 			// fast numeric check for 3 floats
 			if (tok.Count() == 3 && IsNumber(tok[0]) && IsNumber(tok[1]) && IsNumber(tok[2])) {
-				input = "[" + tok[0] + "," + tok[1] + "," + tok[2] + "]";
+				input = string.Format("[%1,%2,%3]", tok[0], tok[1], tok[2]);
 				return true;
 			}
 
@@ -133,7 +133,7 @@ class LogZ_Json
 
 		bool seenDigit, seenDot, needDigitAfterDot, seenExp;
 
-		for (; index < length; index++) {
+		for (; index < length; ++index) {
 			int c = input.Get(index).ToAscii();
 
 			// digit

@@ -129,8 +129,8 @@ class LogZ_Sink
 		string chunk = "";
 		int count = m_Buffer.Count();
 
-		for (int i = 0; i < count; i++)
-			chunk += m_Buffer[i] + "\n";
+		for (int i = 0; i < count; ++i)
+			chunk += string.Format("%1\n", m_Buffer[i]);
 
 		FPrint(m_FH, chunk);
 

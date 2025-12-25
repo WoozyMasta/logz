@@ -282,7 +282,7 @@ modded class PlayerBase
 		super.OnJumpOutVehicleFinish(carSpeed);
 
 		LogZ_GameLogger.WithObject(
-		    this, "player jump out from vehicle on speed " + carSpeed,
+		    this, string.Format("player jump out from vehicle on speed %1", carSpeed),
 		    LogZ_Level.INFO, LogZ_Event.PLAYER_ACTIVITY);
 	}
 }

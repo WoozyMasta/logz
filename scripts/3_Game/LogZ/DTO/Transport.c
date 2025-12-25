@@ -26,13 +26,11 @@ class LogZ_DTO_Transport : LogZ_DTO_Object
 
 		id = LogZ_Object.PersistentHash(veh);
 		lifetime = veh.GetLifetime();
-
-		vector v = GetVelocity(veh);
-		speed = Math.Sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+		speed = GetVelocity(veh).Length();
 
 		members = new array<ref LogZ_DTO_Man>();
 		int crewSize = veh.CrewSize();
-		for (int i = 0; i < crewSize; i++) {
+		for (int i = 0; i < crewSize; ++i) {
 			Man man = veh.CrewMember(i);
 			if (man)
 				members.Insert(new LogZ_DTO_Man(man));
@@ -70,13 +68,11 @@ class LogZ_DTO_TransportStats : LogZ_DTO_ObjectStats
 
 		id = LogZ_Object.PersistentHash(veh);
 		lifetime = veh.GetLifetime();
-
-		vector v = GetVelocity(veh);
-		speed = Math.Sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+		speed = GetVelocity(veh).Length();
 
 		members = new array<ref LogZ_DTO_ManStats>();
 		int crewSize = veh.CrewSize();
-		for (int i = 0; i < crewSize; i++) {
+		for (int i = 0; i < crewSize; ++i) {
 			Man man = veh.CrewMember(i);
 			if (man)
 				members.Insert(new LogZ_DTO_ManStats(man));

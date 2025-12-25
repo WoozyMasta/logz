@@ -212,18 +212,14 @@ class LogZ_Object
 		if (!entity)
 			return 0;
 
-		string seed;
 		int p1, p2, p3, p4;
 		entity.GetPersistentID(p1, p2, p3, p4);
 
 		// Non-persistent objects assign random but consistent per runtime
-		if (p1 == 0 && p2 == 0 && p3 == 0 && p4 == 0) {
-			seed = entity.GetType() + "_" + Math.RandomInt(1, int.MAX).ToString();
-			return seed.Hash();
-		}
+		if (p1 == 0 && p2 == 0 && p3 == 0 && p4 == 0)
+			return string.Format("%1_%2", entity.GetType(), Math.RandomInt(1, int.MAX)).Hash();
 
-		seed = p1.ToString() + "_" + p2.ToString() + "_" + p3.ToString() + "_" + p4.ToString();
-		return seed.Hash();
+		return string.Format("%1_%2_%3_%4", p1, p2, p3, p4).Hash();
 	}
 
 	/**
@@ -245,7 +241,7 @@ class LogZ_Object
 		if (suffix == string.Empty)
 			return name;
 
-		for (int i = 0; i < NAME_SUFFIXES.Count(); i++) {
+		for (int i = 0; i < NAME_SUFFIXES.Count(); ++i) {
 			if (suffix == NAME_SUFFIXES[i])
 				return name.Substring(0, sep);
 		}

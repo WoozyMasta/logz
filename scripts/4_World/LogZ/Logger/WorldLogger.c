@@ -63,12 +63,12 @@ class LogZ_WorldLogger
 			dto.Insert("victim_parent", json);
 
 		if (!killer) {
-			LogZ.Log(LogZ_Object.GetType(victim) + " died", lvl, eventType, dto);
+			LogZ.Log(string.Format("%1 died", LogZ_Object.GetType(victim)), lvl, eventType, dto);
 			return;
 		}
 
 		if (killer == victim) {
-			LogZ.Log(LogZ_Object.GetType(victim) + " death or suicide", lvl, eventType, dto);
+			LogZ.Log(string.Format("%1 death or suicide", LogZ_Object.GetType(victim)), lvl, eventType, dto);
 			return;
 		}
 
@@ -82,7 +82,7 @@ class LogZ_WorldLogger
 		if (LogZ_GameLogger.SerializeParentObject(killer, json))
 			dto.Insert("attacker_parent", json);
 
-		LogZ.Log(LogZ_Object.GetType(victim) + " killed", lvl, eventType, dto);
+		LogZ.Log(string.Format("%1 killed", LogZ_Object.GetType(victim)), lvl, eventType, dto);
 	}
 
 	/**
@@ -127,12 +127,12 @@ class LogZ_WorldLogger
 			dto.Insert("damage", json);
 
 		if (!source) {
-			LogZ.Log(LogZ_Object.GetType(victim) + " damaged", lvl, eventType, dto);
+			LogZ.Log(string.Format("%1 damaged", LogZ_Object.GetType(victim)), lvl, eventType, dto);
 			return;
 		}
 
 		if (source == victim) {
-			LogZ.Log(LogZ_Object.GetType(victim) + " hit self", lvl, eventType, dto);
+			LogZ.Log(string.Format("%1 hit self", LogZ_Object.GetType(victim)), lvl, eventType, dto);
 			return;
 		}
 
@@ -144,7 +144,7 @@ class LogZ_WorldLogger
 		if (LogZ_GameLogger.SerializeParentObject(source, json))
 			dto.Insert("attacker_parent", json);
 
-		LogZ.Log(LogZ_Object.GetType(victim) + " hit", lvl, eventType, dto);
+		LogZ.Log(string.Format("%1 hit", LogZ_Object.GetType(victim)), lvl, eventType, dto);
 	}
 
 	/**

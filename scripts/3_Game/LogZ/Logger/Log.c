@@ -95,9 +95,10 @@ class LogZ
 					continue;
 
 				if (LogZ_Json.IsValue(value))
-					result += ",\"" + LogZ_Json.Escape(key) + "\":" + value;
+					// ! only append long json body, because string.Format cant hold long lines
+					result += string.Format(",\"%1\":", LogZ_Json.Escape(key)) + value;
 				else
-					result += ",\"" + LogZ_Json.Escape(key) + "\":\"" + LogZ_Json.Escape(value) + "\"";
+					result += string.Format(",\"%1\":\"%2\"", LogZ_Json.Escape(key), LogZ_Json.Escape(value));
 			}
 
 			result += "}";

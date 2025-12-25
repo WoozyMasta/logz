@@ -121,7 +121,7 @@ class LogZ_Events
 		LogZ_Event mask = 0;
 		int len = letters.Length();
 
-		for (int i = 0; i < len; i++) {
+		for (int i = 0; i < len; ++i) {
 			int c = letters.Get(i).ToAscii();
 			if (c < 97 || c > 122) // not 'a'..'z'
 				continue;

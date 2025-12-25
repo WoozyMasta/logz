@@ -37,7 +37,7 @@ class LogZ_DTO_Man : LogZ_DTO_Object
 		steam_id = identity.GetPlainId();
 
 		if (player_name == string.Empty && steam_id == string.Empty)
-			player_name = "AI " + obj.ClassName();
+			player_name = string.Format("AI %1", obj.ClassName());
 	}
 
 	/**

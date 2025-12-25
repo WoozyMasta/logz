@@ -17,11 +17,11 @@ modded class AreaDamageEvents
 
 		if (obj.IsMan())
 			LogZ_GameLogger.WithObject(
-			    obj, "player enter damage event area " + ClassName(),
+			    obj, string.Format("player enter damage event area %1", ClassName()),
 			    LogZ_Level.INFO, LogZ_Event.EVENT_IN);
 		else
 			LogZ_GameLogger.WithObject(
-			    obj, "enter damage event area " + ClassName(),
+			    obj, string.Format("enter damage event area %1", ClassName()),
 			    LogZ_Level.DEBUG, LogZ_Event.EVENT_IN);
 	}
 
@@ -35,11 +35,11 @@ modded class AreaDamageEvents
 
 		if (obj.IsMan())
 			LogZ_GameLogger.WithObject(
-			    obj, "player leave damage event " + ClassName(),
+			    obj, string.Format("player leave damage event %1", ClassName()),
 			    LogZ_Level.INFO, LogZ_Event.EVENT_OUT);
 		else
 			LogZ_GameLogger.WithObject(
-			    obj, "leave damage event " + ClassName(),
+			    obj, string.Format("leave damage event %1", ClassName()),
 			    LogZ_Level.DEBUG, LogZ_Event.EVENT_OUT);
 	}
 }
